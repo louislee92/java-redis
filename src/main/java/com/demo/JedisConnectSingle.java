@@ -1,43 +1,27 @@
 package com.demo;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-@SpringBootTest
-public class SpringBootConnect {
-    @Test
-    public void init() {
+/**
+ * 连接单节点redis
+ */
+public class JedisConnectSingle {
 
-        //set 集合,用来装集群的ip 和端口的
-        Set<HostAndPort> nodes = new HashSet<>();
-        nodes.add(new HostAndPort("192.168.20.101", 6379));
-        nodes.add(new HostAndPort("192.168.20.101", 6380));
-        nodes.add(new HostAndPort("192.168.20.102", 6379));
-        nodes.add(new HostAndPort("192.168.20.102", 6380));
-        nodes.add(new HostAndPort("192.168.20.103", 6379));
-        nodes.add(new HostAndPort("192.168.20.103", 6380));
-        // Jedis连接池配置
-        JedisCluster jedis = new JedisCluster(nodes);
-        //执行JedisCluster对象中的方法，方法和redis一一对应。
-
+    public static void main(String[] args) {
+        // 连接单机redis
+        Jedis jedis = new Jedis("192.168.20.101", 6880);
         // String 类型
         jedis.set("testString", "123");
         System.out.println(jedis.get("testString"));
         jedis.append("testString", "456");
         System.out.println(jedis.get("testString"));
         jedis.del("testString");
-//        jedis.mset("testString", "zhangsan", "sex", "男", "age", "18");
-//        jedis.incr("age");
-//        System.out.println(jedis.mget("username", "sex", "age"));
+        jedis.mset("testString", "zhangsan", "sex", "男", "age", "18");
+        jedis.incr("age");
+        System.out.println(jedis.mget("username", "sex", "age"));
+
         // list类型
         jedis.lpush("testList", "item1", "item2", "item3");
         System.out.println(jedis.lrange("testList", 0, -1));
@@ -47,7 +31,6 @@ public class SpringBootConnect {
         System.out.println(jedis.lrange("testList", 0, -1));
         jedis.del("testList");
         // hash 类型
-        System.out.println("---------------------- hash");
         Map<String, String> person = new HashMap<>();
         person.put("name", "李四");
         person.put("sex", "男");
@@ -70,7 +53,7 @@ public class SpringBootConnect {
         System.out.println(jedis.sismember("users", "李四"));
         System.out.println(jedis.srandmember("users"));
 
+        // 关闭redis
         jedis.close();
-
     }
 }
