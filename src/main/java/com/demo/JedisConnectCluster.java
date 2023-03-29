@@ -6,6 +6,9 @@ import redis.clients.jedis.JedisCluster;
 
 import java.util.*;
 
+/**
+ * 使用jedis连接集群环境
+ */
 public class JedisConnectCluster {
 
     public static void main(String[] args) {

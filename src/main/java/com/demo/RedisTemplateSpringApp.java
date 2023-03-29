@@ -1,25 +1,33 @@
 package com.demo;
 
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 使用Spring RedisTemplate连接
+ */
+@Component
+@SpringBootApplication
+public class RedisTemplateSpringApp {
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringBootApp.class)
-public class SpringRedisTest {
+    public static void main(String[] args) {
+        System.out.println("启动前");
+        SpringApplication.run(RedisTemplateSpringApp.class, args);
+        System.out.println("启动后");
+    }
 
     @Autowired
     RedisTemplate redisTemplate;
 
-    @Test
+    @PostConstruct
     public void Test() {
         // String 类型
         redisTemplate.opsForValue().set("Name", "Tom");

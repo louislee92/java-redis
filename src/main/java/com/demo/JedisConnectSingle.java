@@ -5,7 +5,7 @@ import redis.clients.jedis.*;
 import java.util.*;
 
 /**
- * 连接单节点redis
+ * 使用jedis连接单节点redis
  */
 public class JedisConnectSingle {
 
