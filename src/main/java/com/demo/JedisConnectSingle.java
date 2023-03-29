@@ -11,7 +11,7 @@ public class JedisConnectSingle {
 
     public static void main(String[] args) {
         // 连接单机redis
-        Jedis jedis = new Jedis("192.168.20.101", 6880);
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
         // String 类型
         jedis.set("testString", "123");
         System.out.println(jedis.get("testString"));
